@@ -6,7 +6,7 @@ const { isLoggedIn, validateProject, isProjectOwner } = require('../middleware')
 const Ticket = require('../models/ticket');
 
 router.get('/', async (req, res) => {
-    const allProjects = await Project.find();
+    const allProjects = await Project.find().populate('owner');
     res.json(allProjects);
 })
 

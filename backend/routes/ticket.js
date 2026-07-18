@@ -24,6 +24,14 @@ router.post('/', isLoggedIn, validateTicket, async (req, res) => {
     res.status(201).json({ message: "Ticket successfully created", ticket: newTicket });
 })
 
+router.put('/:id' , isLoggedIn , isTicketAuthor , validateTicket , async(req , res) => {
+    const {id} = req.params;
+    const {ticket} = req.body;
+
+    const updatedTicket = await Ticket.findByIdAndUpdate(id , ticket , {new: true});
+    res.status(200).json({message: "Ticket successfully updated" , ticket: updatedTicket});
+})
+
 router.delete('/:id', isLoggedIn, isTicketAuthor, async (req, res) => {
     const { projectId, id } = req.params;
     await Project.findByIdAndUpdate(projectId, { $pull: { tickets: id } });

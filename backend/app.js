@@ -3,6 +3,7 @@ const session = require('express-session');
 const passport = require('passport');
 const User = require('./models/user');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const app = express();
 
 const authRoutes = require('./routes/auth');
@@ -14,6 +15,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/nexus')
     .catch((err) => console.error('MongoDB connection error:', err));
 
 app.use(express.json());
+app.use(cors({ origin: 'http://localhost:5173' , credentials: true}));
 
 app.use(session({
     secret: "thisismysecret",
